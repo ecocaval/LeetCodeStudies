@@ -9,12 +9,15 @@ import java.util.stream.Collectors;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        int[] nums = new int[] { 5, 2, 0, 3, 1 };
+        var points = new int[][] {
+                { 1, 3 }, { 3, 3 }, { 5, 3 }, { 2, 2 }
+        };
 
-        System.out.println();
-        for (int num : findArray(nums)) {
-            System.out.print(num);
-        }
+        var queries = new int[][] {
+                { 2, 3, 1 }, { 4, 3, 1 }, { 1, 1, 2 }
+        };
+
+        countPoints(points, queries);
     }
 
     public static List<List<Integer>> groupThePeople(int[] groupSizes) {
@@ -206,4 +209,124 @@ public class App {
                         .collect(Collectors.toList()))
                 .collect(Collectors.toList());
     }
+
+    public List<List<Integer>> findMatrix(int[] nums) {
+
+        List<List<Integer>> ans = new ArrayList<>();
+
+        for (int i = 0; i < nums.length; i++) {
+
+            final int currentNum = nums[i];
+
+            if (ans.isEmpty()) {
+                List<Integer> listToAdd = new ArrayList<>();
+                listToAdd.add(currentNum);
+                ans.add(listToAdd);
+                continue;
+            }
+
+            boolean numWasAdded = false;
+
+            for (List<Integer> list : ans) {
+                if (!list.contains(currentNum)) {
+                    list.add(currentNum);
+                    numWasAdded = true;
+                    break;
+                }
+            }
+
+            if (numWasAdded)
+                continue;
+
+            List<Integer> listToAdd = new ArrayList<>();
+            listToAdd.add(currentNum);
+            ans.add(listToAdd);
+        }
+
+        return ans;
+    }
+
+    public int minOperations(int[] nums, int k) {
+
+        int bitwiseOperationResult = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            bitwiseOperationResult ^= nums[i];
+        }
+
+        if (bitwiseOperationResult == k) {
+            return 0;
+        }
+
+        boolean triedFirtFlippingOption = false;
+        boolean triedBothFlippingOptions = false;
+
+        int numberOfOperationsNedded = 0;
+
+        while (!triedBothFlippingOptions) {
+
+            if (triedBothFlippingOptions) {
+                int bitLength = Integer.toBinaryString(nums[0]).length();
+                int msbMask = 1 << (bitLength - 1);
+                bitwiseOperationResult = nums[0] ^ msbMask; // flip the bit from the left
+            } else {
+                bitwiseOperationResult = nums[0] ^ 1; // flip the bit from the right
+            }
+
+            numberOfOperationsNedded++;
+
+            for (int i = 1; i < nums.length; i++) {
+                bitwiseOperationResult ^= nums[i];
+            }
+
+            if (bitwiseOperationResult == k) {
+                return numberOfOperationsNedded;
+            }
+
+            if (!triedFirtFlippingOption) {
+                triedBothFlippingOptions = true;
+                continue;
+            }
+
+            triedBothFlippingOptions = true;
+        }
+
+        return numberOfOperationsNedded;
+    }
+
+    public static int[] countPoints(int[][] points, int[][] queries) {
+
+        int queriesLength = queries.length;
+
+        int[] ans = new int[queriesLength];
+
+        for (int i = 0; i < queriesLength; i++) {
+
+            int[] query = queries[i];
+
+            int circleX = query[0];
+            int circleY = query[1];
+            int circleR = query[2];
+
+            int numberOfPointsInsideCircle = 0;
+
+            for (int j = 0; j < points.length; j++) {
+
+                int[] point = points[j];
+
+                int pointX = point[0];
+                int pointY = point[1];
+
+                boolean radiusConfirm = (((pointX - circleX) * (pointX - circleX))
+                        + ((pointY - circleY) * (pointY - circleY))) <= (circleR * circleR);
+
+                if (radiusConfirm) {
+                    numberOfPointsInsideCircle++;
+                }
+            }
+            ans[i] = numberOfPointsInsideCircle;
+        }
+        return ans;
+    }
+
 }
