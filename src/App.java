@@ -329,4 +329,79 @@ public class App {
         return ans;
     }
 
+    public class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+
+    public ListNode middleNode(ListNode head) {
+
+        boolean endWasReached = false;
+
+        List<ListNode> nodeHashMap = new ArrayList<>();
+        ListNode currentNode = head;
+
+        while (!endWasReached) {
+            nodeHashMap.add(currentNode);
+            currentNode = currentNode.next;
+            if (currentNode == null) {
+                endWasReached = true;
+            }
+        }
+
+        return nodeHashMap.get((int) Math.ceil(nodeHashMap.size() / 2));
+    }
+
+    public int getDecimalValue(ListNode head) {
+
+        int ans = 0;
+        List<Integer> nums = new ArrayList<>();
+        ListNode node = head;
+        boolean endWasReached = false;
+
+        while (!endWasReached) {
+            nums.add(node.val);
+            node = node.next;
+            if (node == null) {
+                endWasReached = true;
+            }
+        }
+
+        int listCounter = nums.size() - 1;
+
+        while (listCounter >= 0) {
+            ans += nums.get(listCounter) * Math.pow(2, (nums.size() - 1 - listCounter));
+            listCounter--;
+        }
+
+        return ans;
+    }
+
+    public ListNode reverseList(ListNode head) {
+
+        ListNode currentNode = head;
+        ListNode previousNode = null;
+
+        while (currentNode != null) {
+            ListNode currentNodeCopy = new ListNode(currentNode.val, currentNode.next);
+            currentNode = currentNode.next;
+            currentNodeCopy.next = previousNode;
+            previousNode = currentNodeCopy;
+        }
+
+        return previousNode;
+    }
+
 }
