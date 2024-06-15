@@ -1,3 +1,4 @@
+package array;
 class MyHashSet {
 
     private int[] set = new int[0];
