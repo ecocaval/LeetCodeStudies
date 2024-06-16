@@ -1,7 +1,5 @@
 package queue;
 
-import utils.Utils;
-
 public class EX_1700 {
 
     public static void main(String[] args) {

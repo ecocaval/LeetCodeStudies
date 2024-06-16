@@ -1,15 +1,14 @@
 package array;
-import java.util.Arrays;
 
 class MyHashMap {
 
-    private static void printHashMap(MyHashMap hashMap) {
-        for (int i = 0; i < 20; i++) {
-            System.out.println(i + ": " + hashMap.map[i]);
-        }
-        System.out.println();
-        System.out.println();
-    }
+    // private static void printHashMap(MyHashMap hashMap) {
+    // for (int i = 0; i < 20; i++) {
+    // System.out.println(i + ": " + hashMap.map[i]);
+    // }
+    // System.out.println();
+    // System.out.println();
+    // }
 
     public static void main(String[] args) throws Exception {
 

@@ -1,8 +1,5 @@
 package linked_list;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EX_2130 {
 
     public static void main(String[] args) throws Exception {
